@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     height: 40,
-    width: 200,
+    width: 300,
     borderColor: "gray",
     borderWidth: 1,
     padding: 10
