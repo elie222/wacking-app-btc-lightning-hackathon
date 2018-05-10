@@ -1,7 +1,7 @@
 {
   "name": "wacking-react-native",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "devDependencies": {
     "jest-expo": "~27.0.0",
     "react-native-scripts": "1.14.0",

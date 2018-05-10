@@ -1,5 +1,10 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "privacy": "public",
+    "description": "Demos lightning network functionality on mobile",
+    "ios": {
+      "supportsTablet": true
+    }
   }
 }
