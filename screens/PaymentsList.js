@@ -67,7 +67,7 @@ export default class Invoice extends React.Component {
       <ListItem
         key={item.key}
         title={item.payreq}
-        subtitle={item.status}
+        subtitle={`${item.msatoshi || 0} satoshi - ${item.status} - ${new Date(item.created_at * 1000)}`}
         // leftAvatar={{ source: { uri: item.avatar_url } }}
         chevron={false}
         onPress={() => {
