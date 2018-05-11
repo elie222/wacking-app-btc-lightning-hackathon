@@ -2,6 +2,8 @@
 
 Built for the TLV Bitcoin Hackathon.
 
+Download it at: https://exp.host/@elie/wacking-react-native
+
 ## Running the App
 
 This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
