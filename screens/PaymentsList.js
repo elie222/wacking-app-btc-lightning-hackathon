@@ -5,8 +5,10 @@ import {
   View,
   Button,
   TextInput,
-  FlatList
+  FlatList,
+  Clipboard
 } from "react-native";
+import { ListItem } from "react-native-elements";
 import axios from "axios";
 
 export default class Invoice extends React.Component {
@@ -60,6 +62,25 @@ export default class Invoice extends React.Component {
       });
   }
 
+  renderRow({ item }) {
+    return (
+      <ListItem
+        key={item.key}
+        title={item.payreq}
+        subtitle={item.status}
+        // leftAvatar={{ source: { uri: item.avatar_url } }}
+        chevron={false}
+        onPress={() => {
+          console.log("row: copying payreq");
+          Clipboard.setString(item.payreq)
+        }}
+        rightAvatar={() => {
+          return <Button title="Copy" />;
+        }}
+      />
+    );
+  }
+
   render() {
     const { payments } = this.state;
 
@@ -67,13 +88,13 @@ export default class Invoice extends React.Component {
       <View style={styles.container}>
         <FlatList
           data={payments}
-          // data={[{ key: "a" }, { key: "b" }]}
-          renderItem={({ item }) => (
-            <View key={item.key} style={{ padding: 20 }}>
-              <Text>Id: {item.id}</Text>
-              <Text>Status: {item.status}</Text>
-            </View>
-          )}
+          // renderItem={({ item }) => (
+          //   <View key={item.key} style={{ padding: 20 }}>
+          //     <Text>Id: {item.id}</Text>
+          //     <Text>Status: {item.status}</Text>
+          //   </View>
+          // )}
+          renderItem={this.renderRow}
         />
       </View>
     );

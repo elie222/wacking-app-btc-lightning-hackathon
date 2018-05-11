@@ -1,15 +1,36 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Modal,
+  TouchableOpacity,
+  FlatList
+} from "react-native";
+// import { FormInput } from 'react-native-elements';
 import axios from "axios";
 import qs from "qs";
+import { ACCOUNTS } from "../utils/consts";
 
 export default class Invoice extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { amount: "5000", description: "", requestString: "" };
+    this.state = {
+      amount: "5000",
+      description: "",
+      requestString: "",
+      modalVisible: false,
+      selectedAccount: ACCOUNTS[0].name
+    };
 
     this.onRequestPayment = this.onRequestPayment.bind(this);
+  }
+
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
   }
 
   onRequestPayment() {
@@ -64,6 +85,97 @@ export default class Invoice extends React.Component {
     );
   }
 
+  // renderSwitchAccount() {
+  //   return (
+  //     <View style={{ paddingTop: 50 }}>
+  //       <Button
+  //         title="Switch Account"
+  //         onPress={() => {
+  //           console.log("xxx");
+  //         }}
+  //       />
+  //     </View>
+  //   );
+  // }
+
+  // renderSwitchAccount() {
+  //   return (
+  //     <View style={{ paddingTop: 50 }}>
+  //       <Button
+  //         title="Switch Account"
+  //         onPress={() => {
+  //           console.log("xxx");
+  //         }}
+  //       />
+  //     </View>
+  //   );
+  // }
+
+  renderSwitchAccount() {
+    return (
+      <View style={{ marginTop: 150 }}>
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+        >
+          <View
+            style={{
+              marginTop: 22,
+              flex: 1,
+              backgroundColor: "#fff",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <View>
+              <Text
+                style={{
+                  fontSize: 18
+                }}
+              >
+                Switch Account
+              </Text>
+
+              <View style={{ height: 300 }}>
+                <FlatList
+                  data={ACCOUNTS}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={{ padding: 10 }}
+                      onPress={() => {
+                        this.setState({ selectedAccount: item.name });
+                        this.setModalVisible(false);
+                      }}
+                    >
+                      <Text>{item.name}</Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
+
+              <Button
+                title={"Cancel"}
+                onPress={() => {
+                  this.setModalVisible(!this.state.modalVisible);
+                }}
+              />
+            </View>
+          </View>
+        </Modal>
+
+        <Text>Account: {this.state.selectedAccount}</Text>
+
+        <Button
+          title="Switch Account"
+          onPress={() => {
+            this.setModalVisible(true);
+          }}
+        />
+      </View>
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -84,6 +196,8 @@ export default class Invoice extends React.Component {
         <Button onPress={this.onRequestPayment} title="Request Payment" />
 
         {this.renderRequestString()}
+
+        {this.renderSwitchAccount()}
       </View>
     );
   }
@@ -94,7 +208,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   textInput: {
     height: 40,
@@ -104,6 +218,6 @@ const styles = StyleSheet.create({
     padding: 10
   },
   requestStringContainer: {
-    padding: 20,
-  },
+    padding: 20
+  }
 });
