@@ -111,11 +111,6 @@ export default class Invoice extends React.Component {
       <View>
         <Text>Payment Request</Text>
         <TextInput
-          onChangeText={paymentRequest => this.setState({ paymentRequest })}
-          value={this.state.paymentRequest}
-        />
-
-        <TextInput
           style={styles.textInput}
           onChangeText={paymentRequest => this.setState({ paymentRequest })}
           value={this.state.paymentRequest}
